@@ -79,3 +79,15 @@ def text_to_textnodes(text):
     after_italic = split_nodes_delimiter(after_bold, '_', TextType.ITALIC)
     after_code = split_nodes_delimiter(after_italic, '`', TextType.CODE)
     return after_code
+
+
+def markdown_to_blocks(markdown):
+    raw_blocks = markdown.split("\n\n")
+    blocks = []
+    for block in raw_blocks:
+        lines = block.strip().splitlines()
+        cleaned_lines = [line.strip() for line in lines]
+        cleaned_block ="\n".join(cleaned_lines)
+        if cleaned_block:
+            blocks.append(cleaned_block)
+    return blocks

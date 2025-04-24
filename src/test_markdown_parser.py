@@ -1,6 +1,6 @@
 import unittest
 
-from markdown_parser import split_nodes_delimiter, extract_markdown_images, extract_markdown_links, split_nodes_image, split_nodes_link, text_to_textnodes
+from markdown_parser import split_nodes_delimiter, extract_markdown_images, extract_markdown_links, split_nodes_image, split_nodes_link, text_to_textnodes, markdown_to_blocks
 from textnode import TextNode, TextType
 
 class TestSplitNodesDelimiter(unittest.TestCase):
@@ -303,6 +303,73 @@ class TestTextToTextNodes(unittest.TestCase):
         result = text_to_textnodes("")
         expected = []
         self.assertEqual(result, expected)
+
+
+class TestMarkdownToBlocks(unittest.TestCase):
+    def test_markdown_to_blocks(self):
+        md = """
+        This is **bolded** paragraph
+
+        This is another paragraph with _italic_ text and `code` here
+        This is the same paragraph on a new line
+
+        - This is a list
+        - with items
+        """
+        blocks = markdown_to_blocks(md)
+        self.assertEqual(
+            blocks,
+            [
+                "This is **bolded** paragraph",
+                "This is another paragraph with _italic_ text and `code` here\nThis is the same paragraph on a new line",
+                "- This is a list\n- with items",
+            ],
+        )
+    
+    def test_blank_input(self):
+        md = ""
+        expected = []
+        self.assertEqual(markdown_to_blocks(md), expected)
+
+    def test_only_whitespace_input(self):
+        md = "     \n\n   \n"
+        expected = []
+        self.assertEqual(markdown_to_blocks(md), expected)
+
+    def test_newlines_only(self):
+        md = "\n\n\n"
+        expected = []
+        self.assertEqual(markdown_to_blocks(md), expected)
+
+    def test_block_with_inner_leading_spaces(self):
+        md = " Line one\n  Line two\n   Line three"
+        expected = ["Line one\nLine two\nLine three"]
+        self.assertEqual(markdown_to_blocks(md), expected)
+
+    def test_single_paragraph(self):
+        md = "This is a single paragraph with no line breaks."
+        expected = ["This is a single paragraph with no line breaks."]
+        self.assertEqual(markdown_to_blocks(md), expected)
+
+    def test_paragraph_with_newlines(self):
+        md = "This is a paragraph\nthat continues on a new line\nwith some spacing."
+        expected = ["This is a paragraph\nthat continues on a new line\nwith some spacing."]
+        self.assertEqual(markdown_to_blocks(md), expected)
+
+    def test_multiple_paragraphs(self):
+        md = "This is paragraph one.\n\nThis is paragraph two."
+        expected = ["This is paragraph one.", "This is paragraph two."]
+        self.assertEqual(markdown_to_blocks(md), expected)
+
+    def test_trailing_spaces_and_newlines(self):
+        md = " This is indented. \n\n Second paragraph. \n\n   "
+        expected = ["This is indented.", "Second paragraph."]
+        self.assertEqual(markdown_to_blocks(md), expected)
+
+    def test_list_block(self):
+        md = "- item 1\n - item 2\n- item 3"
+        expected = ["- item 1\n- item 2\n- item 3"]
+        self.assertEqual(markdown_to_blocks(md), expected)
 
 
 if __name__ == "__main__":
