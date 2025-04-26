@@ -1,6 +1,6 @@
 import unittest
 
-from markdown_parser import split_nodes_delimiter, extract_markdown_images, extract_markdown_links, split_nodes_image, split_nodes_link, text_to_textnodes, markdown_to_blocks
+from markdown_parser import split_nodes_delimiter, extract_markdown_images, extract_markdown_links, split_nodes_image, split_nodes_link, text_to_textnodes, markdown_to_blocks, extract_title
 from textnode import TextNode, TextType
 
 class TestSplitNodesDelimiter(unittest.TestCase):
@@ -371,6 +371,27 @@ class TestMarkdownToBlocks(unittest.TestCase):
         expected = ["- item 1\n- item 2\n- item 3"]
         self.assertEqual(markdown_to_blocks(md), expected)
 
+
+class TestExtractTitle(unittest.TestCase):
+    def test_valid_title(self):
+        md = "# My Awesome Title\nSome paragraph text."
+        self.assertEqual(extract_title(md), "My Awesome Title")
+
+    def test_title_with_extra_spaces(self):
+        md = "#   Title with extra spaces\nMore text here."
+        self.assertEqual(extract_title(md), "Title with extra spaces")
+
+    def test_no_title_should_raise(self):
+        md = "Just text without heading"
+        with self.assertRaises(Exception) as context:
+            extract_title(md)
+        self.assertIn("No title", str(context.exception))
+
+    def test_multiple_hashes_not_space(self):
+        md = "## Subtitle without main title"
+        with self.assertRaises(Exception) as context:
+            extract_title(md)
+        self.assertIn("No title", str(context.exception))
 
 if __name__ == "__main__":
     unittest.main()

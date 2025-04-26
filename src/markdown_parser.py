@@ -91,3 +91,12 @@ def markdown_to_blocks(markdown):
         if cleaned_block:
             blocks.append(cleaned_block)
     return blocks
+
+
+def extract_title(markdown):
+    lines = markdown.split("\n")
+    if not any([line.startswith("# ") for line in lines]):
+        raise Exception("No title")
+    for line in lines:
+        if line.startswith("# "):
+            return line.strip("# ")
