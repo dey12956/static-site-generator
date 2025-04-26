@@ -11,7 +11,6 @@ class BlockType(Enum):
 
 def block_to_block_type(block):
     lines = block.split("\n")
-    num = 0
     if block.startswith(("# ", "## ", "### ", "#### ", "##### ", "###### ")):
         return BlockType.HEADING
 
