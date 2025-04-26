@@ -1,7 +1,7 @@
 from markdown_to_htmlnode import markdown_to_html_node
 from markdown_parser import extract_title
 import os
-from main import basepath
+
 
 
 def generate_page(from_path, template_path, dest_path, basepath):
