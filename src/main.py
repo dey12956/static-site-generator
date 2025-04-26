@@ -1,9 +1,10 @@
 from textnode import TextType, TextNode
+from cp_dirtree import cp_dirtree
+
 
 def main():
-    dummy = TextNode("This is an image", TextType.IMG, "![alt text for image](url/of/image.jpg)")
+    cp_dirtree("./static", "./public")
 
-    print(dummy)
 
 if __name__ == "__main__":
     main()
