@@ -28,6 +28,6 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, bas
         if os.path.isfile(item_path):
             if item_path.endswith(".md"):
                 dest_item_path = dest_item_path.replace(".md", ".html")
-                generate_page(item_path, template_path, dest_item_path)
+                generate_page(item_path, template_path, dest_item_path, basepath)
         else:
-            generate_pages_recursive(item_path, template_path, dest_item_path)
+            generate_pages_recursive(item_path, template_path, dest_item_path, basepath)

@@ -8,7 +8,7 @@ def main():
     else:
         basepath = "/"
     cp_dirtree("./static", "./docs")
-    generate_pages_recursive(basepath, "template.html", "docs")
+    generate_pages_recursive("./content", "template.html", "./docs", basepath)
 
 if __name__ == "__main__":
     main()
