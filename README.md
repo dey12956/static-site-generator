@@ -2,7 +2,6 @@
 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Build](https://img.shields.io/github/actions/workflow/status/dey12956/static-site-generator/build.yml?branch=main)](https://github.com/dey12956/static-site-generator/actions)
 [![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-blue?logo=github)](https://dey12956.github.io/static-site-generator/)
 [![Python](https://img.shields.io/badge/Python-3.x-blue.svg)](https://www.python.org/)
 
